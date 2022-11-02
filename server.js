@@ -14,8 +14,8 @@ app.use(express.json());
 // middleware
 app.use(express.static("public"));
 
-app.use("/apiRoutes", apiRoutes);
-app.use("/htmlRoutes", htmlRoutes);
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
 // server listening for requests
 app.listen(PORT, function () {
