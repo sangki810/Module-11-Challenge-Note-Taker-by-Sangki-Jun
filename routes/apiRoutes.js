@@ -1,19 +1,17 @@
 // dependencies
 const apiRouter = require("express").Router();
-const { readFromFile, readAndAppend } = require("./../db/store");
+const { readFromFile, readAndAppend, uuid } = require("./../db/store");
 
 // route to get notes
-apiRouter.get("/api/notes", function (req, res) {
-    readFromFile.then(notes => res.json(notes))
-        .catch(err => res.status(500).json(err))
+apiRouter.get("/api/notes", (req, res) => {
+    console.info(`${req.method} request received for notes`);
+    readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
-// post the notes to page
-apiRouter.post("/api/notes", function (req, res) {
-    store
-        .addNote(req.title, req.body)
-        .then(notes => res.json(notes))
-        .catch(err => res.status(500).json(err))
+// post routes for new notes
+apiRouter.post("/api/notes", (req, res) => {
+    console.info(`${req.method} request recieved to submit notes`);
+    
 });
 
 // deletes notes
@@ -23,7 +21,5 @@ apiRouter.delete("/api/notes/:id", function (req, res) {
         .then(() => res.json({ ok: true }))
         .catch(err => res.status(500).json(err))
 });
- 
-app.use("/", router);
 
-module.exports = router;
+module.exports = apiRouter;
