@@ -1,51 +1,41 @@
 // dependencies
-const express = requrie("express");
-const path = require("path");
-const util = require("util");
-const fs = require("fs");
-const app = express();
+const fs = require('fs');
+const util = require('util');
 
-const asyncReadFile = util.promisify(fs.readFile);
-const asyncWriteFile = util.promisify(fs.writeFile);
-
-class store {
-    constructor() {
-        this.lastId = 0
-    };
-    read() {
-        return asyncReadFile(path.join(__dirname, "db.json"), "utf8");
-    };
-    write(note) {
-        return asyncWriteFile(path.join(__dirname, "db.json"), JSON.stringify(note));
-    };
-    getNotes() {
-        return this.read().then(notes => {
-            let parsedNotes = JSON.parse(notes);
-            return parsedNotes;
-        });
-    };
-    addNote(newNote) {
-        return this.getNotes().then(notes => {
-            const newNoteList = [...notes, newNote];
-            return this.write(newNoteList);
-        });
-    };
-    deleteNotes(title) {
-        return this.getNotes()
-            .then(notes => {
-                console.log("This note says " + title);
-                for (var i = 0; i < notes.length; i++) {
-                    if (notes[i].title === title) {
-                        notes.splice(i, 1);
-                        break;
-                    };
-                };
-                this.write(notes);
-            });
-    };
+// Promise version of fs.readFile
+const readFromFile = util.promisify(fs.readFile);
+/**
+ *  Function to write data to the JSON file given a destination and some content
+ *  @param {string} destination The file you want to write to.
+ *  @param {object} content The content you want to write to the file.
+ *  @returns {void} Nothing
+ */
+const writeToFile = (destination, content) =>
+  fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
+    err ? console.error(err) : console.info(`\nData written to ${destination}`)
+  );
+/**
+ *  Function to read data from a given a file and append some content
+ *  @param {object} content The content you want to append to the file.
+ *  @param {string} file The path to the file you want to save to.
+ *  @returns {void} Nothing
+ */
+const readAndAppend = (content, file) => {
+  fs.readFile(file, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const parsedData = JSON.parse(data);
+      parsedData.push(content);
+      writeToFile(file, parsedData);
+    }
+  });
 };
 
-const store = new Store();
+const uuid = () => {
+  Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+}
 
-module.exports = store;
-
+module.exports = { readFromFile, writeToFile, readAndAppend, uuid };
