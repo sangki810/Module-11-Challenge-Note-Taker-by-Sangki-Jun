@@ -8,11 +8,11 @@ const app = express();
 // set the port
 const PORT = process.env.PORT || 3001;
 
-// set up express to handle data parsing
+// middleware for parsing application/json and urlencoded data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// first middleware
+// middleware
 app.use(express.static("public"));
 // use apiRoutes.js file for routes
 app.use("/api", apiRoutes);
