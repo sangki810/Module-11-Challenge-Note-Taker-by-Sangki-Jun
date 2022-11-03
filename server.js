@@ -14,6 +14,7 @@ app.use(express.json());
 // middleware
 app.use(express.static("public"));
 
+// uses files in routes folder
 app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
 
