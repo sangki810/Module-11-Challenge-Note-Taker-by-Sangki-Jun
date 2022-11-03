@@ -10,6 +10,8 @@ const readFromFile = util.promisify(fs.readFile);
  *  @param {object} content The content you want to write to the file.
  *  @returns {void} Nothing
  */
+
+// writes to file
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
@@ -20,6 +22,8 @@ const writeToFile = (destination, content) =>
  *  @param {string} file The path to the file you want to save to.
  *  @returns {void} Nothing
  */
+
+// reads and append(writes to) file
 const readAndAppend = (content, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
@@ -32,10 +36,12 @@ const readAndAppend = (content, file) => {
   });
 };
 
+// random character and number generator to be used as id generator for new notes
 const uuid = () => {
   return Math.floor((1 + Math.random()) * 0x10000)
     .toString(16)
     .substring(1);
 }
 
+// exports the four functions above for other files
 module.exports = { readFromFile, writeToFile, readAndAppend, uuid };
