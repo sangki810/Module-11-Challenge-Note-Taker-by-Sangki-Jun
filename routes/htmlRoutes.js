@@ -1,5 +1,6 @@
 // dependencies
 const htmlRouter = require("express").Router();
+const path = require("path")
 
 // gets notes.html
 htmlRouter.get("/notes", (req, res) => {
