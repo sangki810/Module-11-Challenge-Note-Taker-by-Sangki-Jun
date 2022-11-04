@@ -16,7 +16,10 @@ This is the completed module 11 challenge from the UCF FSF Bootcamp. The purpose
 N/A
 
 ## Usage
-Title your notes, take whatever notes you desire, and save using the save button. Delete any unwanted notes using the delete button.
+Title your notes, take whatever notes you desire, and save using the save button. Delete any unwanted notes using the delete button. You can visit the site using this link: [Note Taker](https://note-taker-by-sangki-jun.herokuapp.com/)
+
+## Screenshot
+![](./public/assets/images/note%20taker.jpg)
 
 ## Contributing
 If you have any good ideas or changes you want to share, you can create a pull request or add issues to the repository. You can also contact me using the information in the [Questions](#questions) section.<br />
